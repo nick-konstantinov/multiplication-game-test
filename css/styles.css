@@ -1,0 +1,20 @@
+body {
+  font-family: sans-serif;
+  margin: 0;
+  padding: 40px;
+}
+
+.example-row {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 8px;
+}
+
+.example-left {
+  display: flex;
+  gap: 6px;
+}
+
+.example__input {
+  width: 60px;
+}
