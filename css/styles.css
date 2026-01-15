@@ -92,9 +92,11 @@ body {
   padding: 0.5rem 1rem;
   font-size: 16px;
   border: none;
+  border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.2s;
   margin-top: 20px;
+  color: #fff;
 }
 
 .controls__button:disabled {
@@ -120,5 +122,6 @@ body {
 
 .wrong-input {
   border: 2px solid #FA8072;
-  transition: border 0.3s ease;
+  transition: border 0.3s ease, color 0,3s ease;
+  color: #FA8072;
 }

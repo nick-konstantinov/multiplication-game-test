@@ -120,15 +120,25 @@ button.addEventListener('click', () => {
     currentInput.classList.add('answered');
     currentInput.disabled = true;
 
-    step++;
-    createExample(step);
-  } else {
+    button.disabled = true;
+
+    setTimeout(() => {
+      step++;
+      createExample(step);
+    }, 400);
+  }else {
     button.classList.add('wrong');
     currentInput.classList.add('wrong-input');
 
     setTimeout(() => {
       button.className = 'controls__button';
       currentInput.classList.remove('wrong-input');
+      currentInput.focus();
+
+      if (currentInput.value !== '') {
+        button.disabled = false;
+        button.classList.add('active');
+      }
     }, 1000);
   }
 });
