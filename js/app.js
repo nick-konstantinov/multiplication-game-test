@@ -91,6 +91,11 @@ function createExample(step) {
   row.appendChild(right);
 
   examplesEl.appendChild(row);
+
+  requestAnimationFrame(() => {
+    row.classList.add('visible');
+  });
+
   currentInput = input;
   input.focus();
 

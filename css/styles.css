@@ -49,6 +49,14 @@ body {
   align-items: center;
   flex-wrap: wrap;
   gap: 30px;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 1s ease, transform 0.25s ease;
+}
+
+.example-row.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .example-left {
