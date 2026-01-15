@@ -33,6 +33,12 @@ function createExample(step) {
   input.addEventListener('input', () => {
     button.disabled = input.value === '';
   });
+
+  for (let i = 0; i < N; i++) {
+    const cube = document.createElement('div');
+    cube.className = 'cube';
+    right.appendChild(cube);
+  }
 }
 
 button.addEventListener('click', () => {

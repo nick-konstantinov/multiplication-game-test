@@ -18,3 +18,17 @@ body {
 .example__input {
   width: 60px;
 }
+
+.example-right {
+  width: 140px;
+  height: 24px;
+  display: flex;
+  gap: 10px;
+}
+
+.cube {
+  width: 24px;
+  height: 24px;
+  background: #2ecc71;
+  border-radius: 2px;
+}
