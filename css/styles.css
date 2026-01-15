@@ -1,3 +1,15 @@
+:root {
+  --color-button-active: #2DABA6;
+  --color-button-right: #228B22;
+  --color-button-wrong: #FA8072;
+  --color-button-hover: #AFEEEE;
+  --color-button-disabled: #A9A9A9;
+  --color-button-text: #FFFFFF;
+  --color-cube: #2ECC71;
+  --cube-size: 24px;
+  --cube-gap: 10px;
+}
+
 body {
   font-family: sans-serif;
   display: flex;
@@ -72,17 +84,24 @@ body {
 .example-right {
   display: flex;
   justify-content: end;
-  gap: 10px;
+  gap: var(--cube-gap);
   width: 300px;
-  height: 24px;
+  height: var(--cube-size);
 }
 
 .cube {
-  width: 24px;
-  height: 24px;
-  background: #2ecc71;
+  width: var(--cube-size);
+  height: var(--cube-size);
+  background: var(--color-cube);
   border-radius: 2px;
   opacity: 1;
+  transform: translateY(0);
+  transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+.cube--hidden {
+  transform: translateY(100vh);
+  opacity: 0;
 }
 
 .controls {
@@ -97,48 +116,42 @@ body {
   cursor: pointer;
   transition: background-color 0.2s;
   margin-top: 20px;
-  color: #fff;
+  color: var(--color-button-text);
 }
 
 .controls__button:disabled {
-  background: #A9A9A9;
+  background: var(--color-button-disabled);
   cursor: not-allowed;
 }
 
 .controls__button.active {
-  background: #2DABA6;
+  background: var(--color-button-active);
 }
 
 .controls__button:hover:not(:disabled) {
-  background: #AFEEEE;
+  background: var(--color-button-hover);
 }
 
 .controls__button.right {
-  background: #228B22;
+  background: var(--color-button-right);
 }
 
 .controls__button.wrong {
-  background: #FA8072;
+  background: var(--color-button-wrong);
 }
 
 .wrong-input {
-  border: 2px solid #FA8072;
-  transition: border 0.3s ease, color 0,3s ease;
-  color: #FA8072;
+  border: 2px solid var(--color-button-wrong);
+  color: var(--color-button-wrong);
+  transition: border 0.3s ease, color 0.3s ease;
 }
 
 @media (max-width: 530px) {
   .example-row {
-    gap: 10px;
-    justify-content: center;
+    gap: 10px; justify-content: center;
   }
 
-  .example-left {
-    width: auto;
-  }
-
-  .example-right {
+  .example-left, .example-right {
     width: auto;
   }
 }
-
