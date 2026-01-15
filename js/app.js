@@ -83,6 +83,7 @@ function createExample(step) {
   const input = document.createElement('input');
   input.type = 'number';
   input.className = 'example__input';
+  input.name = `answer-${config.multiplier}-${step}`;
   left.appendChild(input);
   row.appendChild(left);
 
