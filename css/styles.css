@@ -35,7 +35,8 @@ body {
 .example-row {
   display: flex;
   align-items: center;
-  gap: 50px;
+  flex-wrap: wrap;
+  gap: 30px;
 }
 
 .example-left {
@@ -125,3 +126,19 @@ body {
   transition: border 0.3s ease, color 0,3s ease;
   color: #FA8072;
 }
+
+@media (max-width: 530px) {
+  .example-row {
+    gap: 10px;
+    justify-content: center;
+  }
+
+  .example-left {
+    width: auto;
+  }
+
+  .example-right {
+    width: auto;
+  }
+}
+
