@@ -1,14 +1,37 @@
-const N = 4;
+let N = 4;
 let step = 1;
+const MAX_STEP = 10;
 
 const examplesEl = document.getElementById('examples');
 const button = document.getElementById('submitBtn');
+const multiplierSelect = document.getElementById('multiplierSelect');
 
 let currentInput = null;
 
+multiplierSelect.addEventListener('change', () => {
+  N = Number(multiplierSelect.value);
+  resetGame();
+});
+
 createExample(step);
 
+function resetGame() {
+  step = 1;
+  examplesEl.innerHTML = '';
+  button.disabled = true;
+  button.className = 'controls__button';
+  button.textContent = 'Done';
+  currentInput = null;
+
+  createExample(step);
+}
+
 function createExample(step) {
+  if (step > MAX_STEP) {
+    finishGame();
+    return;
+  }
+
   const row = document.createElement('div');
   row.className = 'example-row';
 
@@ -32,45 +55,54 @@ function createExample(step) {
   input.focus();
 
   button.disabled = true;
-  button.className = '';
+  button.className = 'controls__button';
 
   input.addEventListener('input', () => {
     if (input.value !== '') {
       button.disabled = false;
-      button.className = 'active';
+      button.classList.add('active');
     } else {
       button.disabled = true;
-      button.className = '';
+      button.classList.remove('active');
     }
   });
 
-  for (let i = 0; i < N; i++) {
+  animateCubes(right, N);
+}
+
+function animateCubes(container, count) {
+  document.body.classList.add('no-scroll');
+
+  let finished = 0;
+
+  for (let i = 0; i < count; i++) {
     const cube = document.createElement('div');
     cube.className = 'cube';
-    document.body.appendChild(cube);
+    container.appendChild(cube);
 
-    const rect = right.getBoundingClientRect();
-    const targetX = rect.left + i * (24 + 10);
-    const targetY = rect.top;
+    const rect = cube.getBoundingClientRect();
+    const offsetY = window.innerHeight - rect.top;
 
-    cube.style.left = `${targetX}px`;
-    cube.style.top = `${window.innerHeight}px`;
+    cube.style.transition = 'none';
+    cube.style.transform = `translateY(${offsetY}px)`;
+    cube.style.opacity = '0';
 
     requestAnimationFrame(() => {
       cube.style.transition = 'transform 0.5s ease, opacity 0.5s ease';
-      cube.style.transform = `translateY(${targetY - window.innerHeight}px)`;
+      cube.style.transform = 'translateY(0)';
       cube.style.opacity = '1';
     });
 
-    cube.addEventListener('transitionend', () => {
-      cube.style.transition = '';
-      cube.style.transform = '';
-      cube.style.position = 'relative';
-      cube.style.left = '';
-      cube.style.top = '';
-      cube.style.opacity = '1';
-      right.appendChild(cube);
-    }, { once: true });
+    cube.addEventListener(
+      'transitionend',
+      () => {
+        finished++;
+        if (finished === count) {
+          document.body.classList.remove('no-scroll');
+        }
+      },
+      { once: true }
+    );
   }
 }
 
@@ -80,23 +112,33 @@ button.addEventListener('click', () => {
   const answer = Number(currentInput.value);
   const correct = N * step;
 
-  button.className = '';
+  button.className = 'controls__button';
 
   if (answer === correct) {
     button.classList.add('right');
 
-    currentInput.blur();
+    currentInput.classList.add('answered');
     currentInput.disabled = true;
-    currentInput.classList.add('input--answered');
 
     step++;
     createExample(step);
   } else {
     button.classList.add('wrong');
     currentInput.classList.add('wrong-input');
+
     setTimeout(() => {
-      button.className = '';
+      button.className = 'controls__button';
       currentInput.classList.remove('wrong-input');
     }, 1000);
   }
 });
+
+function finishGame() {
+  button.disabled = true;
+  button.className = 'controls__button';
+  button.textContent = '✔';
+
+  if (currentInput) {
+    currentInput.blur();
+  }
+}
