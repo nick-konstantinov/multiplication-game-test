@@ -35,6 +35,16 @@ body {
   font-size: 16px;
 }
 
+.example__input::-webkit-inner-spin-button,
+.example__input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.example__input {
+  -moz-appearance: textfield;
+}
+
 .example-right {
   display: flex;
   gap: 10px;
