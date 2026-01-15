@@ -29,6 +29,7 @@ function createExample(step) {
 
   examplesEl.appendChild(row);
   currentInput = input;
+  input.focus();
 
   button.disabled = true;
   button.className = '';
@@ -84,6 +85,7 @@ button.addEventListener('click', () => {
   if (answer === correct) {
     button.classList.add('right');
 
+    currentInput.blur();
     currentInput.disabled = true;
     currentInput.classList.add('input--answered');
 
