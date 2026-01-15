@@ -30,22 +30,71 @@ function createExample(step) {
   examplesEl.appendChild(row);
   currentInput = input;
 
+  button.disabled = true;
+  button.className = '';
+
   input.addEventListener('input', () => {
-    button.disabled = input.value === '';
+    if (input.value !== '') {
+      button.disabled = false;
+      button.className = 'active';
+    } else {
+      button.disabled = true;
+      button.className = '';
+    }
   });
 
   for (let i = 0; i < N; i++) {
     const cube = document.createElement('div');
     cube.className = 'cube';
-    right.appendChild(cube);
+    document.body.appendChild(cube);
+
+    const rect = right.getBoundingClientRect();
+    const targetX = rect.left + i * (24 + 10);
+    const targetY = rect.top;
+
+    cube.style.left = `${targetX}px`;
+    cube.style.top = `${window.innerHeight}px`;
+
+    requestAnimationFrame(() => {
+      cube.style.transition = 'transform 0.5s ease, opacity 0.5s ease';
+      cube.style.transform = `translateY(${targetY - window.innerHeight}px)`;
+      cube.style.opacity = '1';
+    });
+
+    cube.addEventListener('transitionend', () => {
+      cube.style.transition = '';
+      cube.style.transform = '';
+      cube.style.position = 'relative';
+      cube.style.left = '';
+      cube.style.top = '';
+      cube.style.opacity = '1';
+      right.appendChild(cube);
+    }, { once: true });
   }
 }
 
 button.addEventListener('click', () => {
+  if (!currentInput) return;
+
   const answer = Number(currentInput.value);
-  if (answer === N * step) {
+  const correct = N * step;
+
+  button.className = '';
+
+  if (answer === correct) {
+    button.classList.add('right');
+
     currentInput.disabled = true;
+    currentInput.classList.add('input--answered');
+
     step++;
     createExample(step);
+  } else {
+    button.classList.add('wrong');
+    currentInput.classList.add('wrong-input');
+    setTimeout(() => {
+      button.className = '';
+      currentInput.classList.remove('wrong-input');
+    }, 1000);
   }
 });
